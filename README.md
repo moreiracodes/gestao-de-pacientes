@@ -8,7 +8,7 @@ Para executá-lo localmente:
 
 1. Clone este repositório.
 ```
-git clone 
+git clone https://github.com/moreiracodes/gestao-de-pacientes
 ```
 
 2. Instale o Flask
