@@ -26,7 +26,7 @@ Ao executar o servidor flask (comando acima), acesse na seguinte ordem para inst
 ## 1. /config
 Acesse primeiro /config para instalação e configurações dos parâmetros iniciais.
 Obs: Apenas o usuário Maria tem dados vitais cadastrados
-## 2. /lista/usuario
+## 2. /lista/usuarios
 Para visualizar todos os usuários cadastrados 
 
 PS: por enquanto, não há página inicial na raiz (/)
