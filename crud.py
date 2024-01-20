@@ -195,11 +195,42 @@ def inserir_usuarios(tipo_usuarios_id, nome, email):
         print()
 
 
-def get_usuario_id(email):
+def get_usuarios():
+    query = "select * from usuarios"
+    linha_tabela = ler_banco_de_dados(query)
+    # print(linha_tabela)
+    return linha_tabela
+
+
+def get_usuario_by_email(email):
     query = "select * from usuarios where email='" + email + "'"
     linha_tabela = ler_banco_de_dados(query)
     id = linha_tabela[0][0]
     return id
+
+
+def get_perfil_by_usuario_id(usuario_id):
+    query = '''
+                SELECT u.nome, u.email,
+                    ut.tipo,
+                    dv.pressao_arterial,
+                    dv.saturacao_O2,
+                    dv.frequencia_cardiaca,
+                    dv.ausculta_pulmonar
+                FROM usuarios AS u
+                
+                LEFT JOIN usuarios_tipos AS ut
+                ON u.tipo_id=ut.id
+
+                LEFT JOIN dados_vitais AS dv
+                ON u.id=dv.usuario_id
+
+                WHERE u.id={0}
+
+            '''.format(usuario_id)
+    linha_tabela = ler_banco_de_dados(query)
+    print(linha_tabela)
+    return linha_tabela
 
 
 def inserir_dados_vitais(pressao_arterial, saturacao_O2, frequencia_cardiaca,

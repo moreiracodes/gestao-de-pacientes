@@ -1,0 +1,53 @@
+
+body{
+    background-color:lightskyblue;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
+}
+
+h1{
+    text-align: center;
+    padding: 1.1em;
+}
+
+ul{margin: 0; padding: 0;}
+.lista_usuarios li{
+    /* background-color: bisque; */
+    list-style:none;
+    text-align: center;
+}
+
+.lista_usuarios li a{
+
+    margin: 1em;
+    padding: 1em;
+    display: block;
+    background-color: aqua;
+    /* width: 100%;
+    height: 100%; */
+    text-decoration:none;
+    
+    
+    font-size: 1.2em;
+    color: black;
+    
+}
+
+.lista_usuarios li a:hover{
+
+    background-color:darkcyan;
+
+}
+
+.lista_usuarios li a .nome
+{
+font-weight: bold;
+}
+.lista_usuarios a{
+
+    background-color: greenyellow;
+
+}
+
+table tr td:first-child{
+    font-weight: bold;
+}

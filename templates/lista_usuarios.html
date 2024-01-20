@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='global.css') }}" />
+    </head>
+    <body>
+        <div>
+            <h1>Usuários</h1>
+            {% if lista_usuarios: %}
+            <ul class="lista_usuarios">
+                {% for usuario in lista_usuarios: %}
+                
+                <li>
+                    <a href="/perfil-usuario/{{ usuario[0] }}">
+                        <span class="nome">{{ usuario[1] }}</span><br/>
+                        <span class="email">{{ usuario[3] }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else: %}
+            <p>lista_usuarios não existe</p>
+            {% endif %}
+        </div>
+    </body>
+</html>

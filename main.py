@@ -1,5 +1,7 @@
 from flask import Flask
+from flask import render_template
 from pathlib import Path
+
 from . import crud
 from . import utils
 
@@ -7,7 +9,7 @@ from . import utils
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/config")
 def index():
 
     # para propósito de testes:
@@ -16,6 +18,14 @@ def index():
     if (Path(db_file).is_file):
         Path(db_file).unlink()
     ###############
+
+    # armazena a mensagem de retorno
+    mensagem = ''
+
+
+    #######################
+    # CRIAÇAO DAS TABELAS #
+    #######################
 
     # chamada das funções que criam as tabelas no db
     flag_criacao_tabelas = False
@@ -33,8 +43,6 @@ def index():
     for tipo in tipo_usuarios:
         flag_tipos_usuario = crud.inserir_tipos_de_usuarios(tipo)
 
-    mensagem = ''
-
     # Caso haja algum problema com a criação das tabelas
     # a mensagem não será exibida
     if (flag_criacao_tabelas):
@@ -45,12 +53,11 @@ def index():
     if (flag_tipos_usuario):
         mensagem += '<p>Categorias de usuários criadas com sucesso</p>'
 
-    mensagem = '<div>' + mensagem + '</div>'
-    return mensagem
 
+    ########################
+    # CADASTRO DE USUÁRIOS #
+    ########################
 
-@app.route('/cadastrar-usuario')
-def cadastrar_usuario():
     # exemplos de usuário:
     # Esses valores serão inseridos pelo usuário no futuro.
     lista_usuarios = [
@@ -67,36 +74,51 @@ def cadastrar_usuario():
         flag = crud.inserir_usuarios(usuario[0], usuario[1], usuario[2])
 
     if (flag):
-        return '<p>Usuários cadastrados com sucesso</p>'
+        mensagem += '<p>Usuários cadastrados com sucesso</p>'
     else:
-        return '<p>Erro ao cadastrar usuários</p>'
-
-# <email_usuario> é uma variável que estou passando pela URL,
-# no caso, passo o e-mail do usuário
+        mensagem += '<p>Erro ao cadastrar usuários</p>'
 
 
-@app.route('/cadastrar-dados-vitais/<email_usuario>')
-def cadastrar_dados_vitais(email_usuario):
+    ######################################
+    # APENAS PARA FINS DE TESTES:        #
+    # INSERÇÃO DOS DADOS VITAIS DE MARIA #
+    ######################################
+
     # exemplos de dados:
     # Esses valores serão inseridos pelo usuário no futuro.
+    email_usuario = 'maria@email.com'
+
     dados_vitais = [
         '10x8',
         '98%',
         '50bpm',
         'ap:mv+ sem ra',
-        crud.get_usuario_id(email_usuario)
+        crud.get_usuario_by_email(email_usuario)
     ]
 
     flag = crud.inserir_dados_vitais(dados_vitais[0], dados_vitais[1],
                                      dados_vitais[2], dados_vitais[3],
                                      dados_vitais[4])
-    mensagem = ''
 
     if (flag):
-        mensagem = '<p>Dados vitais do usuário ' + email_usuario + \
-            'foram cadastrados com sucesso</p>'
+        mensagem += '<p>Dados vitais do usuário ' + email_usuario + \
+            ' foram cadastrados com sucesso</p>'
     else:
-        mensagem = '<p>Erro ao cadastrar os dados vitais do usuário \
+        mensagem += '<p>Erro ao cadastrar os dados vitais do usuário \
             ' + email_usuario + '</p>'
+    
+    mensagem += '<p><a href="/lista/usuarios">Ir para lista de usuários</a></p>'
+
+    mensagem = '<div>' + mensagem + '</div>'
 
     return mensagem
+
+
+@app.route('/lista/usuarios')
+def lista_usuarios():
+    return render_template('lista_usuarios.html', lista_usuarios=crud.get_usuarios())
+
+
+@app.route('/perfil-usuario/<id>')
+def perfil_usuario(id):
+    return render_template('perfil_usuario.html', perfil=crud.get_perfil_by_usuario_id(id))

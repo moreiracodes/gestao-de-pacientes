@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='global.css') }}" />
+    </head>
+    <body>
+        <div>
+            <h1>Perfil</h1>
+            
+            {% if perfil: %}
+            <table>
+                <tr>
+                    <td>
+                        Nome
+                    </td>
+                    <td>
+                        {{ perfil[0][0] }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        E-mail:
+                    </td>
+                    <td>
+                        {{ perfil[0][1] }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Categoria/Tipo:
+                    </td>
+                    <td>
+                        {{ perfil[0][2] }}
+                    </td>
+                </tr>
+
+                {% if perfil[0][3] != None : %}
+
+                <tr>
+                    <td>
+                        pressao_arterial:
+                    </td>
+                    <td>
+                        {{ perfil[0][3] }}
+                    </td>
+                </tr>
+
+                {% endif %}
+                {% if perfil[0][4] != None : %}
+
+                <tr>
+                    <td>
+                        saturacao_O2
+                    </td>
+                    <td>
+                        {{ perfil[0][4] }}
+                    </td>
+                </tr>
+                {% endif %}
+                {% if perfil[0][5] != None : %}
+                <tr>
+                    <td>
+                        frequencia_cardiaca:
+                    </td>
+                    <td>
+                        {{ perfil[0][5] }}
+                    </td>
+                </tr>
+                {% endif %}
+                {% if perfil[0][6] != None : %}
+                <tr>
+                    <td>
+                        ausculta_pulmonar:
+                    </td>
+                    <td>
+                        {{ perfil[0][6] }}
+                    </td>
+                </tr>
+                {% endif %}
+                
+            </table>
+
+            {% else: %}
+            <p>Nenhum perfil encontrado</p>
+            {% endif %}
+            <p><a href="/lista/usuarios">Voltar para lista de usuários</a></p>
+        </div>
+    </body>
+</html>
